@@ -4,12 +4,11 @@ export const checkLocalStorage = () => {
   if (!token && !refreshToken) {
     return logout()
   } else {
-    const geolocation = JSON.parse(localStorage.getItem("geolocation"))
-
     return {
       localStorage: true,
       token: token,
-      geolocation: geolocation,
+      geo: JSON.parse(localStorage.getItem("geo")),
+      ss: JSON.parse(localStorage.getItem("ss")),
     }
   }
 }
@@ -19,6 +18,7 @@ export const logout = () => {
   localStorage.removeItem("refresh_token")
 
   return {
-    geolocation: JSON.parse(localStorage.getItem("geolocation")),
+    geo: JSON.parse(localStorage.getItem("geo")),
+    ss: JSON.parse(localStorage.getItem("ss")),
   }
 }
