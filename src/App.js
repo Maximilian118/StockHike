@@ -13,7 +13,7 @@ const App = () => {
   const [ user, setUser ] = useState(checkLocalStorage())
 
   useEffect(() => {
-    getCandles('AAPL', 'D', moment().subtract(1, 'year').unix(), moment().unix())
+    Object.keys(user.symbols).length === 0 && getCandles('Default', 'D', moment().subtract(1, 'year').unix(), moment().unix(), user, setUser)
     checkGeo(user, setUser)
     user.geo && !user.ss && getSuriseSunset(user.geo, user, setUser)
   }, [user])

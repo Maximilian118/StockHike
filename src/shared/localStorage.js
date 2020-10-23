@@ -9,6 +9,7 @@ export const checkLocalStorage = () => {
       token: token,
       geo: JSON.parse(localStorage.getItem("geo")),
       ss: JSON.parse(localStorage.getItem("ss")),
+      symbols: {},
     }
   }
 }
@@ -20,5 +21,6 @@ export const logout = () => {
   return {
     geo: JSON.parse(localStorage.getItem("geo")),
     ss: JSON.parse(localStorage.getItem("ss")),
+    symbols: {},
   }
 }
