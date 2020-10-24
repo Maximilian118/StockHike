@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toPercent } from './utility'
 
 export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   const defaults = ['AAPL', 'TSLA', 'GOOGL']
@@ -7,7 +8,10 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
     defaults.map(async def => {
       await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${def}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {  
         def = {
-          [def]: res.data.c,
+          [def]: {
+            price: res.data.c,
+            percent: toPercent(res.data.c),
+          },
         }
 
         process.env.NODE_ENV === 'development' && console.log(res)
@@ -41,7 +45,10 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
     const newSymbols = {
       ...user.symbols,
       defaults: false,
-      [symbol]: res.data.c,
+      [symbol]: {
+        price: res.data.c,
+        percent: toPercent(res.data.c),
+      },
     }
 
     setUser({

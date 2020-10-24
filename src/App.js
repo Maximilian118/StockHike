@@ -20,7 +20,7 @@ const App = () => {
     } else {
       checkGeo(user, setUser)
     }
-    
+
   }, [user])
 
   // If in develop mode, console log every time any state used in context is mutated. 

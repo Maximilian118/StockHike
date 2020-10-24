@@ -23,6 +23,13 @@ export const checkGeo = (user, setUser) => {
   }
 }
 
+// Get the maximum price and the minimum price and set percentages based on those two figures.
+export const toPercent = priceArr => {
+  return priceArr.map(price => {
+    return ((price - Math.min(...priceArr)) * 100) / (Math.max(...priceArr) - Math.min(...priceArr))
+  })
+}
+
 // Remove a key: value pair from context. 
 // Function call example: removeKey(user, "nameOfKey")
 export const removeKey = (obj, prop) => {
