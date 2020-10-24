@@ -17,7 +17,9 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
       return def
     })
   ).then(res => {
-    let defsToObj = {}
+    let defsToObj = {
+      defaults: true,
+    }
 
     res.forEach(obj => defsToObj = {
       ...defsToObj,
@@ -37,6 +39,7 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
   axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
     const newSymbols = {
       ...user.symbols,
+      defaults: false,
       [symbol]: res.data.c,
     }
 

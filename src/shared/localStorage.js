@@ -9,7 +9,7 @@ export const checkLocalStorage = () => {
       token: token,
       geo: JSON.parse(localStorage.getItem("geo")),
       ss: JSON.parse(localStorage.getItem("ss")),
-      symbols: {},
+      symbols: JSON.parse(localStorage.getItem("symbols")),
     }
   }
 }
@@ -18,9 +18,11 @@ export const logout = () => {
   localStorage.removeItem("token")
   localStorage.removeItem("refresh_token")
 
+  const symbols = localStorage.getItem("symbols") ? JSON.parse(localStorage.getItem("symbols")) : {}
+
   return {
     geo: JSON.parse(localStorage.getItem("geo")),
     ss: JSON.parse(localStorage.getItem("ss")),
-    symbols: {},
+    symbols: symbols.defaults ? symbols : {},
   }
 }
