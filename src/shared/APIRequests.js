@@ -64,6 +64,52 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
   })
 }
 
+export const getSymbolInfo = (user, setUser) => {
+  let madeRequest = false
+
+  Promise.all(
+    Object.entries(user.symbols).map(async symbol => {
+      if (!symbol[1].hasOwnProperty('info') && symbol[0] !== 'defaults') {
+        madeRequest = true
+        await axios.get(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol[0]}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
+          symbol = {
+            [symbol[0]]: {
+              ...symbol[1],
+              info: res.data,
+            }
+          }
+
+          process.env.NODE_ENV === 'development' && console.log(res)
+        }).catch(err => {
+          process.env.NODE_ENV === 'development' && console.log(err)
+        })
+
+        return symbol
+      } else {
+        return {
+          [symbol[0]]: symbol[1],
+        }
+      }
+    })
+  ).then(res => {
+    if (madeRequest) {
+      let toObj = {}
+
+      res.forEach(obj => toObj = {
+        ...toObj,
+        ...obj,
+      })
+
+      setUser({
+        ...user,
+        symbols: toObj,
+      })
+
+      localStorage.setItem("symbols", JSON.stringify(toObj))
+    }
+  })
+}
+
 export const getSuriseSunset = (geo, user, setUser) => {
   axios.get(`https://api.sunrise-sunset.org/json?lat=${geo.lat}&lng=${geo.lon}`).then(res => {
     setUser({
