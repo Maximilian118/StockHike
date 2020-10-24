@@ -1,6 +1,7 @@
 export const checkLocalStorage = () => {
   const token = localStorage.getItem("token")
   const refreshToken = localStorage.getItem("refresh_token")
+  
   if (!token && !refreshToken) {
     return logout()
   } else {

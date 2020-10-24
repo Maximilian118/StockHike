@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   const defaults = ['AAPL', 'TSLA', 'GOOGL', 'FB']
+  
   Promise.all(
     defaults.map(async def => {
       await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${def}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {  

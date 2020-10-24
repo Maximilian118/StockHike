@@ -14,8 +14,13 @@ const App = () => {
 
   useEffect(() => {
     Object.keys(user.symbols).length === 0 && getDefaultCandles('D', moment().subtract(1, 'year').unix(), moment().unix(), user, setUser)
-    checkGeo(user, setUser)
-    user.geo && !user.ss && getSuriseSunset(user.geo, user, setUser)
+    
+    if (user.geo) {
+      !user.ss && getSuriseSunset(user.geo, user, setUser)
+    } else {
+      checkGeo(user, setUser)
+    }
+    
   }, [user])
 
   // If in develop mode, console log every time any state used in context is mutated. 
