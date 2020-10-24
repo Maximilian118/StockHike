@@ -3,7 +3,7 @@ import './scss/base.scss'
 import Background from './components/Background'
 import { checkGeo } from './shared/utility'
 import { checkLocalStorage } from './shared/localStorage'
-import { getCandles, getSuriseSunset } from './shared/APIRequests'
+import { getDefaultCandles, getSuriseSunset } from './shared/APIRequests'
 import moment from 'moment'
 
 const Context = React.createContext()
@@ -13,7 +13,7 @@ const App = () => {
   const [ user, setUser ] = useState(checkLocalStorage())
 
   useEffect(() => {
-    Object.keys(user.symbols).length === 0 && getCandles('Default', 'D', moment().subtract(1, 'year').unix(), moment().unix(), user, setUser)
+    Object.keys(user.symbols).length === 0 && getDefaultCandles('D', moment().subtract(1, 'year').unix(), moment().unix(), user, setUser)
     checkGeo(user, setUser)
     user.geo && !user.ss && getSuriseSunset(user.geo, user, setUser)
   }, [user])

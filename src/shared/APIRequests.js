@@ -1,56 +1,56 @@
 import axios from 'axios'
 
-export const getCandles = async (symbol, resolution, from, to, user, setUser) => {
+export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   const defaults = ['AAPL', 'TSLA', 'GOOGL', 'FB']
-  if (symbol === 'Default') {
-    Promise.all(
-      defaults.map(async def => {
-        await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${def}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {  
-          def = {
-            [def]: res.data.c,
-          }
+  Promise.all(
+    defaults.map(async def => {
+      await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${def}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {  
+        def = {
+          [def]: res.data.c,
+        }
 
-          process.env.NODE_ENV === 'development' && console.log(res)
-        }).catch(err => {
-          process.env.NODE_ENV === 'development' && console.log(err)
-        })
-
-        return def
-      })
-    ).then(res => {
-      let toObj = {}
-
-      res.forEach(obj => toObj = {
-        ...toObj,
-        ...obj,
+        process.env.NODE_ENV === 'development' && console.log(res)
+      }).catch(err => {
+        process.env.NODE_ENV === 'development' && console.log(err)
       })
 
-      setUser({
-        ...user,
-        symbols: toObj,
-      })
-
-      localStorage.setItem("symbols", JSON.stringify(toObj))
+      return def
     })
-  } else {
-    axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
-      const newSymbols = {
-        ...user.symbols,
-        [symbol]: res.data.c,
-      }
+  ).then(res => {
+    let defsToObj = {}
 
-      setUser({
-        ...user,
-        symbols: newSymbols,
-      })
-
-      localStorage.setItem("symbols", JSON.stringify(newSymbols))
-
-      process.env.NODE_ENV === 'development' && console.log(res)
-    }).catch(err => {
-      process.env.NODE_ENV === 'development' && console.log(err)
+    res.forEach(obj => defsToObj = {
+      ...defsToObj,
+      ...obj,
     })
-  }
+
+    setUser({
+      ...user,
+      symbols: defsToObj,
+    })
+
+    localStorage.setItem("symbols", JSON.stringify(defsToObj))
+  })
+}
+
+export const getCandles = (symbol, resolution, from, to, user, setUser) => {
+  axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
+    const newSymbols = {
+      ...user.symbols,
+      [symbol]: res.data.c,
+    }
+
+    setUser({
+      ...user,
+      symbols: newSymbols,
+    })
+
+    localStorage.setItem("symbols", JSON.stringify(newSymbols))
+
+    process.env.NODE_ENV === 'development' && console.log(res)
+  }).catch(err => {
+    process.env.NODE_ENV === 'development' && console.log(err)
+  })
 }
 
 export const getSuriseSunset = (geo, user, setUser) => {
