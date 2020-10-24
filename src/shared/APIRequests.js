@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const getDefaultCandles = (resolution, from, to, user, setUser) => {
-  const defaults = ['AAPL', 'TSLA', 'GOOGL', 'FB']
+  const defaults = ['AAPL', 'TSLA', 'GOOGL']
   
   Promise.all(
     defaults.map(async def => {
