@@ -2,7 +2,7 @@ import axios from 'axios'
 import { toPercent } from './utility'
 
 export const getDefaultCandles = (resolution, from, to, user, setUser) => {
-  const defaults = ['AAPL', 'TSLA', 'GOOGL']
+  const defaults = ['AAPL', 'TSLA', 'FB']
   
   Promise.all(
     defaults.map(async def => {
