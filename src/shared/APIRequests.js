@@ -9,8 +9,10 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
       await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${def}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {  
         def = {
           [def]: {
-            price: res.data.c,
+            candles: res.data.c,
             xy: toXY(def, res.data.c),
+            max: Math.max(...res.data.c),
+            min: Math.min(...res.data.c),
           },
         }
 
@@ -30,7 +32,7 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
       ...defsToObj,
       ...obj,
     })
-
+    
     setUser({
       ...user,
       symbols: defsToObj,
@@ -48,8 +50,10 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
       ...user.symbols,
       defaults: false,
       [symbol]: {
-        price: res.data.c,
+        candles: res.data.c,
         xy: toXY(res.data.c),
+        max: Math.max(...res.data.c),
+        min: Math.min(...res.data.c),
       },
     }
 

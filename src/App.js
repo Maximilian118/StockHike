@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './scss/base.scss'
 import Background from './components/Background'
-import { checkGeo } from './shared/utility'
+import { checkGeo, removeKey } from './shared/utility'
 import { checkLocalStorage } from './shared/localStorage'
 import { getDefaultCandles, getSymbolInfo, getSuriseSunset } from './shared/APIRequests'
 import moment from 'moment'
@@ -32,7 +32,12 @@ const App = () => {
 
   return (
     <Context.Provider value={{ loading, setLoading, user, setUser }}>
-      <Background user={user}/>
+      <Background 
+        user={{ 
+          ...user, 
+          symbols: removeKey(user.symbols, "defaults"),
+        }}
+      />
     </Context.Provider>
   )
 }
