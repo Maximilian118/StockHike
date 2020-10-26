@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { toPercent } from './utility'
+import { toXY } from './utility'
 
 export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   const defaults = ['AAPL', 'TSLA', 'FB']
@@ -10,7 +10,7 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
         def = {
           [def]: {
             price: res.data.c,
-            percent: toPercent(res.data.c),
+            xy: toXY(def, res.data.c),
           },
         }
 
@@ -37,6 +37,8 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
     })
 
     localStorage.setItem("symbols", JSON.stringify(defsToObj))
+  }).catch(err => {
+    process.env.NODE_ENV === 'development' && console.log(err)
   })
 }
 
@@ -47,7 +49,7 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
       defaults: false,
       [symbol]: {
         price: res.data.c,
-        percent: toPercent(res.data.c),
+        xy: toXY(res.data.c),
       },
     }
 
@@ -69,13 +71,13 @@ export const getSymbolInfo = (user, setUser) => {
 
   Promise.all(
     Object.entries(user.symbols).map(async symbol => {
-      if (!symbol[1].hasOwnProperty('info') && symbol[0] !== 'defaults') {
+      if (!symbol[1].hasOwnProperty('name') && symbol[0] !== 'defaults') {
         madeRequest = true
         await axios.get(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol[0]}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
           symbol = {
             [symbol[0]]: {
               ...symbol[1],
-              info: res.data,
+              ...res.data,
             }
           }
 
@@ -107,6 +109,8 @@ export const getSymbolInfo = (user, setUser) => {
 
       localStorage.setItem("symbols", JSON.stringify(toObj))
     }
+  }).catch(err => {
+    process.env.NODE_ENV === 'development' && console.log(err)
   })
 }
 

@@ -23,11 +23,17 @@ export const checkGeo = (user, setUser) => {
   }
 }
 
-// Get the maximum price and the minimum price and set percentages based on those two figures.
-export const toPercent = priceArr => {
-  return priceArr.map(price => {
-    return ((price - Math.min(...priceArr)) * 100) / (Math.max(...priceArr) - Math.min(...priceArr))
-  })
+// Convert priceArr to data for line chart.
+export const toXY = (symbol, priceArr) => {
+  return {
+    "id": symbol,
+    "data": priceArr.map((price, i) => {
+      return {
+        "x": i,
+        "y": price,
+      }
+    }),
+  }
 }
 
 // Remove a key: value pair from context. 

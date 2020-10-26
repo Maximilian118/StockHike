@@ -4,10 +4,10 @@ import Dash from '../Dash'
 import Candles from '../Candles'
 import Footer from '../Footer'
 
-const Background = () => 
+const Background = ({ user }) => 
   <div className="background">
     <Dash/>
-    <Candles/>
+    <Candles user={user}/>
     <Footer/>
   </div>
 
