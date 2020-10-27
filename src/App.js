@@ -13,16 +13,18 @@ const App = () => {
   const [ user, setUser ] = useState(checkLocalStorage())
 
   useEffect(() => {
-    if (Object.keys(user.symbols).length === 0) {
-      getDefaultCandles('D', moment().subtract(1, 'year').unix(), moment().unix(), user, setUser)
-    } else {
+    const haveSymbols = Object.keys(user.symbols).length > 0
+
+    if (haveSymbols) {
       getSymbolInfo(user, setUser)
+    } else {
+      getDefaultCandles('D', moment().subtract(1, 'year').unix(), moment().unix(), user, setUser)
     }
 
     if (user.geo) {
       !user.ss && getSuriseSunset(user.geo, user, setUser)
     } else {
-      checkGeo(user, setUser)
+      haveSymbols && checkGeo(user, setUser)
     }
 
   }, [user])
