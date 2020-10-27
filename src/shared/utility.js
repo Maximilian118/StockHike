@@ -2,8 +2,8 @@
 export const candleData = (symbol, priceArr) => {
   return {
     id: symbol,
-    max: Math.max(...priceArr),
     min: Math.min(...priceArr),
+    max: Math.max(...priceArr),
     data: priceArr.map((price, i) => {
       return {
         "x": i,
@@ -11,18 +11,4 @@ export const candleData = (symbol, priceArr) => {
       }
     }),
   }
-}
-
-// Sort the symbols into an array of objects for Candles component.
-// Object with the highest max value to the object to the lowest max value.
-export const sortSymbols = user => {
-  const symbolXYData = []
-
-  for (const symbols in user.symbols) {
-    symbolXYData.push(user.symbols[symbols].candles)
-  }
-
-  symbolXYData.sort((a, b) => (a.max > b.max) ? 1 : -1)
-
-  return symbolXYData
 }

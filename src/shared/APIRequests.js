@@ -8,9 +8,8 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
     defaults.map(async def => {
       await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${def}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {  
         def = {
-          [def]: {
-            candles: candleData(def, res.data.c),
-          },
+          symbol: def,
+          candles: candleData(def, res.data.c),
         }
 
         process.env.NODE_ENV === 'development' && console.log(res)
@@ -20,92 +19,14 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
 
       return def
     })
-  ).then(res => {
-    let defsToObj = {}
-
-    res.forEach(obj => defsToObj = {
-      ...defsToObj,
-      ...obj,
-    })
-    
+  ).then(defsArr => {
     setUser({
       ...user,
-      symbols: defsToObj,
+      symbols: defsArr,
     })
 
     localStorage.setItem("defaults", true)
-    localStorage.setItem("symbols", JSON.stringify(defsToObj))
-  }).catch(err => {
-    process.env.NODE_ENV === 'development' && console.log(err)
-  })
-}
-
-export const getCandles = (symbol, resolution, from, to, user, setUser) => {
-  axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
-    const newSymbols = {
-      ...user.symbols,
-        [symbol]: {
-        candles: candleData(symbol, res.data.c),
-      },
-    }
-
-    setUser({
-      ...user,
-      symbols: newSymbols,
-    })
-
-    localStorage.setItem("defaults", false)
-    localStorage.setItem("symbols", JSON.stringify(newSymbols))
-
-    process.env.NODE_ENV === 'development' && console.log(res)
-  }).catch(err => {
-    process.env.NODE_ENV === 'development' && console.log(err)
-  })
-}
-
-export const getSymbolInfo = (user, setUser) => {
-  let madeRequest = false
-
-  Promise.all(
-    Object.entries(user.symbols).map(async symbol => {
-      if (!symbol[1].hasOwnProperty('name')) {
-        madeRequest = true
-        await axios.get(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol[0]}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
-          symbol = {
-            [symbol[0]]: {
-              ...symbol[1],
-              ...res.data,
-            }
-          }
-
-          process.env.NODE_ENV === 'development' && console.log(res)
-        }).catch(err => {
-          process.env.NODE_ENV === 'development' && console.log(err)
-        })
-
-        return symbol
-      } else {
-        return {
-          [symbol[0]]: symbol[1],
-        }
-      }
-    })
-  ).then(res => {
-    if (madeRequest) {
-      let toObj = {}
-
-      res.forEach(obj => toObj = {
-        ...toObj,
-        ...obj,
-      })
-
-      setUser({
-        ...user,
-        symbols: toObj,
-      })
-
-      localStorage.setItem("symbols", JSON.stringify(toObj))
-    }
+    localStorage.setItem("symbols", JSON.stringify(defsArr))
   }).catch(err => {
     process.env.NODE_ENV === 'development' && console.log(err)
   })
@@ -128,7 +49,6 @@ export const getLocationInfo = (user, setUser) => {
           })
 
           localStorage.setItem('location', JSON.stringify(location))
-
           process.env.NODE_ENV === 'development' && console.log(res)
         }).catch(err => {
           process.env.NODE_ENV === 'development' && console.log(err)

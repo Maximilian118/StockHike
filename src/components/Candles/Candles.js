@@ -1,12 +1,11 @@
 import React from 'react'
 import './_Candles.scss'
 import { ResponsiveLine } from '@nivo/line'
-import { sortSymbols } from '../../shared/utility'
 
 const Candles = ({ user }) => 
   <div className="candles">
     {Object.keys(user.symbols).length > 0 && <ResponsiveLine
-      data={sortSymbols(user)}
+      data={user.symbols.map(symbol => symbol.candles).sort((a, b) => (a.max > b.max) ? 1 : -1)}
       colors={['#3a3a3c', '#f36b22', '#fcb116']}
       margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
       xScale={{ type: 'point' }}
