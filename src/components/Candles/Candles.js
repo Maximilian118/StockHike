@@ -7,6 +7,7 @@ const Candles = ({ user }) =>
   <div className="candles">
     {Object.keys(user.symbols).length > 0 && <ResponsiveLine
       data={sortSymbols(user)}
+      colors={['#3a3a3c', '#f36b22', '#fcb116']}
       margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
       xScale={{ type: 'point' }}
       yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: false, reverse: false }}
