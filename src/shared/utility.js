@@ -25,7 +25,7 @@ export const checkGeo = (user, setUser) => {
 }
 
 // Convert priceArr to data for line chart.
-export const toXY = (symbol, priceArr) => {
+export const candleData = (symbol, priceArr) => {
   return {
     id: symbol,
     max: Math.max(...priceArr),
@@ -45,7 +45,7 @@ export const sortSymbols = user => {
   const symbolXYData = []
 
   for (const symbols in user.symbols) {
-    symbolXYData.push(user.symbols[symbols].xy)
+    symbolXYData.push(user.symbols[symbols].candles)
   }
 
   symbolXYData.sort((a, b) => (a.max > b.max) ? 1 : -1)

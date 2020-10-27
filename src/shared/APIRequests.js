@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { toXY } from './utility'
+import { candleData } from './utility'
 
 export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   const defaults = ['AAPL', 'TSLA', 'FB']
@@ -9,8 +9,7 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
       await axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${def}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {  
         def = {
           [def]: {
-            candles: res.data.c,
-            xy: toXY(def, res.data.c),
+            candles: candleData(def, res.data.c),
           },
         }
 
@@ -48,8 +47,7 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
       ...user.symbols,
       defaults: false,
       [symbol]: {
-        candles: res.data.c,
-        xy: toXY(res.data.c),
+        candles: candleData(symbol, res.data.c),
       },
     }
 
