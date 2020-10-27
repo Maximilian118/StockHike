@@ -26,10 +26,3 @@ export const sortSymbols = user => {
 
   return symbolXYData
 }
-
-// Remove a key: value pair from context. 
-// Function call example: removeKey(user, "nameOfKey")
-export const removeKey = (obj, prop) => {
-  let {[prop]: omit, ...res} = obj
-  return res
-}

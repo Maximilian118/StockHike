@@ -21,9 +21,7 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
       return def
     })
   ).then(res => {
-    let defsToObj = {
-      defaults: true,
-    }
+    let defsToObj = {}
 
     res.forEach(obj => defsToObj = {
       ...defsToObj,
@@ -35,6 +33,7 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
       symbols: defsToObj,
     })
 
+    localStorage.setItem("defaults", true)
     localStorage.setItem("symbols", JSON.stringify(defsToObj))
   }).catch(err => {
     process.env.NODE_ENV === 'development' && console.log(err)
@@ -45,8 +44,7 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
   axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
     const newSymbols = {
       ...user.symbols,
-      defaults: false,
-      [symbol]: {
+        [symbol]: {
         candles: candleData(symbol, res.data.c),
       },
     }
@@ -56,6 +54,7 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
       symbols: newSymbols,
     })
 
+    localStorage.setItem("defaults", false)
     localStorage.setItem("symbols", JSON.stringify(newSymbols))
 
     process.env.NODE_ENV === 'development' && console.log(res)
@@ -69,7 +68,7 @@ export const getSymbolInfo = (user, setUser) => {
 
   Promise.all(
     Object.entries(user.symbols).map(async symbol => {
-      if (!symbol[1].hasOwnProperty('name') && symbol[0] !== 'defaults') {
+      if (!symbol[1].hasOwnProperty('name')) {
         madeRequest = true
         await axios.get(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol[0]}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
           symbol = {

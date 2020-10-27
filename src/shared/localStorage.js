@@ -22,6 +22,6 @@ export const logout = () => {
 
   return {
     location: JSON.parse(localStorage.getItem("location")),
-    symbols: symbols.defaults ? symbols : {},
+    symbols: JSON.parse(localStorage.getItem("defaults")) ? symbols : {},
   }
 }
