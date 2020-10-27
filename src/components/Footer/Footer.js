@@ -17,6 +17,7 @@ const Footer = ({ user }) =>
       areaOpacity={0.3}
       enableCrosshair={false}
     />}
+    <p>&copy; Maximilian Crosby &amp; Kate Ellis</p>
   </div>
 
 export default Footer

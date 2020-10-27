@@ -1,4 +1,13 @@
 .footer {
   width: 100%;
   height: 15%;
+
+  p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #b6b0a6;
+    cursor: default;
+    text-align: center;
+  }
 }
