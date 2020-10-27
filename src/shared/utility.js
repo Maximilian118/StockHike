@@ -11,7 +11,8 @@ export const checkGeo = (user, setUser) => {
         }
 
         setUser({
-          ...removeKey(user, "ss"),
+          ...user,
+          ss: null,
           geo: geo,
         })
 
