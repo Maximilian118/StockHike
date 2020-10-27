@@ -8,7 +8,7 @@ const Background = ({ user }) =>
   <div className="background">
     <Dash/>
     <Candles user={user}/>
-    <Footer/>
+    <Footer user={user}/>
   </div>
 
 export default Background
