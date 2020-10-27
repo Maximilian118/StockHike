@@ -11,8 +11,6 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
           [def]: {
             candles: res.data.c,
             xy: toXY(def, res.data.c),
-            max: Math.max(...res.data.c),
-            min: Math.min(...res.data.c),
           },
         }
 
@@ -52,8 +50,6 @@ export const getCandles = (symbol, resolution, from, to, user, setUser) => {
       [symbol]: {
         candles: res.data.c,
         xy: toXY(res.data.c),
-        max: Math.max(...res.data.c),
-        min: Math.min(...res.data.c),
       },
     }
 
