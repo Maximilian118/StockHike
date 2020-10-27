@@ -25,6 +25,11 @@ const Candles = ({ user }) =>
       pointLabelYOffset={-12}
       enableArea={true}
       areaOpacity={1}
+      tooltip={value => 
+        <div className="tooltip">
+          <strong style={{ color: value.point.borderColor }}>{value.point.serieId}</strong>&nbsp;{value.point.data.y}
+        </div>
+      }
       enableCrosshair={false}
       useMesh={true}
       legends={[]}

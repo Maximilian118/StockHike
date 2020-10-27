@@ -7,7 +7,7 @@ export const candleData = (symbol, priceArr) => {
     data: priceArr.map((price, i) => {
       return {
         "x": i,
-        "y": price,
+        "y": price.toFixed(2),
       }
     }),
   }
