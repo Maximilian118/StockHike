@@ -112,17 +112,31 @@ export const getSymbolInfo = (user, setUser) => {
   })
 }
 
-export const getSuriseSunset = (geo, user, setUser) => {
-  axios.get(`https://api.sunrise-sunset.org/json?lat=${geo.lat}&lng=${geo.lon}`).then(res => {
-    setUser({
-      ...user,
-      ss: res.data.results,
+export const getLocationInfo = (user, setUser) => {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(position => {
+      if (!user.location || user.location.lat !== position.coords.latitude || user.location.lon !== position.coords.longitude) {
+        axios.get(`https://api.sunrise-sunset.org/json?lat=${position.coords.latitude}&lng=${position.coords.longitude}`).then(res => {
+          const location = {
+            ...res.data.results,
+            lat: Number(position.coords.latitude),
+            lon: Number(position.coords.longitude),
+          }
+
+          setUser({
+            ...user,
+            location: location,
+          })
+
+          localStorage.setItem('location', JSON.stringify(location))
+
+          process.env.NODE_ENV === 'development' && console.log(res)
+        }).catch(err => {
+          process.env.NODE_ENV === 'development' && console.log(err)
+        })
+      }
     })
-
-    localStorage.setItem("ss", JSON.stringify(res.data.results))
-
-    process.env.NODE_ENV === 'development' && console.log(res)
-  }).catch(err => {
-    process.env.NODE_ENV === 'development' && console.log(err)
-  })
+  } else {
+    process.env.NODE_ENV === 'development' && console.log("Geolocation Not Available!")
+  }
 }
