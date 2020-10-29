@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { candleData } from './utility'
+import { candleData, setColours } from './utility'
 
 export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   const defaults = ['AAPL', 'TSLA', 'FB']
@@ -41,6 +41,7 @@ export const getLocationInfo = (user, setUser) => {
             ...res.data.results,
             lat: Number(position.coords.latitude),
             lon: Number(position.coords.longitude),
+            colours: setColours(res.data.results),
           }
 
           setUser({

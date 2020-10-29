@@ -12,3 +12,15 @@ export const candleData = (symbol, priceArr) => {
     }),
   }
 }
+
+// Return an array of colours depending on sunrise-sunset data.
+// If nothing passed, return default.
+export const setColours = ss => {
+  const desertDay = ['#3a3a3c', '#f36b22', '#fcb116']
+
+  if (!ss) {
+    return desertDay
+  } else {
+    return desertDay
+  }
+}

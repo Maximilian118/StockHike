@@ -19,7 +19,7 @@ export const logout = () => {
   localStorage.removeItem("refresh_token")
 
   return {
-    location: JSON.parse(localStorage.getItem("location")),
+    location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : {},
     symbols: JSON.parse(localStorage.getItem("defaults")) ? JSON.parse(localStorage.getItem("symbols")) : [],
   }
 }

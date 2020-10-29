@@ -1,12 +1,13 @@
 import React from 'react'
 import './_Candles.scss'
 import { ResponsiveLine } from '@nivo/line'
+import { setColours } from '../../shared/utility'
 
 const Candles = ({ user }) => 
   <div className="candles">
     {user.symbols.length > 0 && <ResponsiveLine
       data={user.symbols.map(symbol => symbol.candles).sort((a, b) => (a.max > b.max) ? 1 : -1)}
-      colors={['#3a3a3c', '#f36b22', '#fcb116']}
+      colors={user.location.colours ? user.location.colours : setColours()}
       xScale={{ type: 'point' }}
       yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: false, reverse: false }}
       enableGridX={false}
