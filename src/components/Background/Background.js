@@ -6,7 +6,7 @@ import Footer from '../Footer'
 
 const Background = ({ user }) => 
   <div className="background">
-    <Dash/>
+    <Dash user={user}/>
     <Candles user={user}/>
     <Footer user={user}/>
   </div>
