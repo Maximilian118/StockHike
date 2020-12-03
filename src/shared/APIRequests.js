@@ -20,13 +20,20 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
       return def
     })
   ).then(defsArr => {
+    const defsArrWithColours = defsArr.map((symbol, i) => {
+      return {
+        ...symbol,
+        colour: setColours()[i],
+      }
+    })
+
     setUser({
       ...user,
-      symbols: defsArr,
+      symbols: defsArrWithColours,
     })
 
     localStorage.setItem("defaults", true)
-    localStorage.setItem("symbols", JSON.stringify(defsArr))
+    localStorage.setItem("symbols", JSON.stringify(defsArrWithColours))
   }).catch(err => {
     process.env.NODE_ENV === 'development' && console.log(err)
   })
@@ -41,7 +48,6 @@ export const getLocationInfo = (user, setUser) => {
             ...res.data.results,
             lat: Number(position.coords.latitude),
             lon: Number(position.coords.longitude),
-            colours: setColours(res.data.results),
           }
 
           setUser({
