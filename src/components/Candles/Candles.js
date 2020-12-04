@@ -2,6 +2,7 @@ import React from 'react'
 import './_Candles.scss'
 import { ResponsiveLine } from '@nivo/line'
 import { setColours } from '../../shared/utility'
+import PickerItem from '../Dash/Picker/PickerItem'
 
 const Candles = ({ user }) => 
   <div className="candles">
@@ -19,9 +20,11 @@ const Candles = ({ user }) =>
       enableCrosshair={false}
       useMesh={true}
       tooltip={value => 
-        <div className="tooltip">
-          <strong style={{ color: value.point.serieColor }}>{value.point.serieId}</strong>&nbsp;{value.point.data.y}
-        </div>
+        <PickerItem symbol={{
+          ...value.point,
+          colour: value.point.color,
+          symbol: value.point.serieId,
+        }}/>
       }
     />}
   </div>
