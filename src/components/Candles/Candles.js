@@ -7,7 +7,7 @@ import PickerItem from '../Dash/Picker/PickerItem'
 const Candles = ({ user }) => 
   <div className="candles">
     {user.symbols.length > 0 && <ResponsiveLine
-      data={user.symbols.map(symbol => symbol.candles).sort((a, b) => (a.max > b.max) ? 1 : -1)}
+      data={user.symbols.map(symbol => symbol.candles)}
       colors={user.symbols.length !== 0 ? user.symbols.map(symbol => symbol.colour) : setColours()}
       xScale={{ type: 'point' }}
       yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: false, reverse: false }}

@@ -20,7 +20,8 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
       return def
     })
   ).then(defsArr => {
-    const defsArrWithColours = defsArr.map((symbol, i) => {
+    const sortedArray = defsArr.map(symbol => symbol).sort((a, b) => (a.candles.max > b.candles.max) ? 1 : -1)
+    const sortedArrayWithColours = sortedArray.map((symbol, i) => {
       return {
         ...symbol,
         colour: setColours()[i],
@@ -29,11 +30,11 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
 
     setUser({
       ...user,
-      symbols: defsArrWithColours,
+      symbols: sortedArrayWithColours,
     })
 
     localStorage.setItem("defaults", true)
-    localStorage.setItem("symbols", JSON.stringify(defsArrWithColours))
+    localStorage.setItem("symbols", JSON.stringify(sortedArrayWithColours))
   }).catch(err => {
     process.env.NODE_ENV === 'development' && console.log(err)
   })
