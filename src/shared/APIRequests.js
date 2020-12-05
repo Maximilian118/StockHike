@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { candleData, setColours } from './utility'
+import moment from 'moment'
 
 export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   const defaults = ['AAPL', 'TSLA', 'FB']
@@ -45,10 +46,16 @@ export const getLocationInfo = (user, setUser) => {
     navigator.geolocation.getCurrentPosition(position => {
       if (!user.location || user.location.lat !== position.coords.latitude || user.location.lon !== position.coords.longitude) {
         axios.get(`https://api.sunrise-sunset.org/json?lat=${position.coords.latitude}&lng=${position.coords.longitude}`).then(res => {
-          const location = {
-            ...res.data.results,
+          let location = {
             lat: Number(position.coords.latitude),
             lon: Number(position.coords.longitude),
+          }
+
+          for (const property in res.data.results) {
+            location = {
+              ...location,
+              [property]: moment(res.data.results[property], ["h:mm:ss A"]).format("HH:mm:ss"),
+            }
           }
 
           setUser({
