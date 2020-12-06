@@ -52,12 +52,15 @@ export const getLocationInfo = (user, setUser) => {
               [property]: moment(res.data.results[property], 'h:mm:ss: A').diff(moment().startOf('day'), 'seconds'),
             }
           }
-        
-          let location = {
+
+          const current_time = moment().diff(moment().startOf('day'), 'seconds')
+
+          const location = {
             ...res.data.results,
-            current_time: moment().diff(moment().startOf('day'), 'seconds'),
+            current_time: current_time,
             mid_day: (res.data.results.sunrise + res.data.results.sunset) / 2,
             mid_night: ((res.data.results.sunrise + res.data.results.sunset) / 2) + (12 * 60 * 60),
+            is_day: current_time > res.data.results.sunrise && current_time < res.data.results.sunset ? true : false,
             lat: Number(position.coords.latitude),
             lon: Number(position.coords.longitude),
           }
