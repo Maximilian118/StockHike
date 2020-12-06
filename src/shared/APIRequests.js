@@ -53,7 +53,7 @@ export const getLocationInfo = (user, setUser) => {
             }
           }
 
-          const current_time = moment().diff(moment().startOf('day'), 'seconds')
+          const current_time = moment(moment().format('HH:mm:ss: A'), 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds')
 
           const location = {
             ...res.data.results,
