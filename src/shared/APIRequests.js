@@ -46,16 +46,20 @@ export const getLocationInfo = (user, setUser) => {
     navigator.geolocation.getCurrentPosition(position => {
       if (!user.location || user.location.lat !== position.coords.latitude || user.location.lon !== position.coords.longitude) {
         axios.get(`https://api.sunrise-sunset.org/json?lat=${position.coords.latitude}&lng=${position.coords.longitude}`).then(res => {
+          for (const property in res.data.results) {
+            res.data.results = {
+              ...res.data.results,
+              [property]: moment(res.data.results[property], 'h:mm:ss: A').diff(moment().startOf('day'), 'seconds'),
+            }
+          }
+        
           let location = {
+            ...res.data.results,
+            current_time: moment().diff(moment().startOf('day'), 'seconds'),
+            mid_day: (res.data.results.sunrise + res.data.results.sunset) / 2,
+            mid_night: ((res.data.results.sunrise + res.data.results.sunset) / 2) + (12 * 60 * 60),
             lat: Number(position.coords.latitude),
             lon: Number(position.coords.longitude),
-          }
-
-          for (const property in res.data.results) {
-            location = {
-              ...location,
-              [property]: moment(res.data.results[property], ["h:mm:ss A"]).format("HH:mm:ss"),
-            }
           }
 
           setUser({
