@@ -4,7 +4,10 @@ import { Circle, Moon } from 'react-feather'
 
 const SunMoon = ({ user }) => 
   <div className="sun-moon-container">
-    {!user.isDay ? <Circle className="sun-moon"/> : <Moon className="sun-moon"/>}
+    { user.location.is_day ? 
+      <Circle className="sun-moon" style={{ bottom: `${user.location.percent}%`}}/> : 
+      <Moon className="sun-moon" style={{ bottom: `${user.location.percent}%`}}/>
+    }
   </div>
 
 export default SunMoon

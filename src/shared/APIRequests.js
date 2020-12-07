@@ -49,18 +49,54 @@ export const getLocationInfo = (user, setUser) => {
           for (const property in res.data.results) {
             res.data.results = {
               ...res.data.results,
-              [property]: moment(res.data.results[property], 'h:mm:ss: A').diff(moment().startOf('day'), 'seconds'),
+              [property]: moment(res.data.results[property], ["h:mm:ss A"]).format("HH:mm:ss"),
             }
           }
 
-          const current_time = moment(moment().format('HH:mm:ss: A'), 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds')
+          const current_date = moment().format("YYYY-MM-DD")
+          const current_time = moment().format("HH:mm:ss")
+          const current_date_time = moment(`${current_date} ${current_time}`)
+
+          const sunrise = moment(`${current_date} ${res.data.results.sunrise}`)
+          const sunset = moment(`${current_date} ${res.data.results.sunset}`)
+          const hour24 = moment(`${current_date} 24:00:00`)
+          const hour0 = moment(`${current_date} 00:00:00`)
+
+          const sunset_till_hour24 = hour24.clone().subtract(sunset)
+          const hour24_till_sunrise = sunrise.clone().subtract(hour0)
+
+          const midnight = sunset.clone().add(sunset_till_hour24.clone().add(hour24_till_sunrise).valueOf()/2)
+          const midday = sunrise.clone().add(sunset.clone().subtract(sunrise).valueOf()/2)
+
+          const day_percent_per_ms = 100/midday.clone().subtract(sunrise).valueOf()
+          const night_percent_per_ms = 100/midnight.clone().subtract(sunset).valueOf()
+
+          let percent = 0
+        
+          if (current_date_time.isSame(sunrise) || current_date_time.isSame(sunset)) {
+            percent = 0
+          } else if (current_date_time.isSame(midday) || current_date_time.isSame(midnight)) {
+            percent = 100
+          }
+          
+          if (current_date_time.isBetween(sunrise, midday)) {
+            percent = current_date_time.subtract(sunrise).valueOf() * day_percent_per_ms
+          } else if(current_date_time.isBetween(midday, sunset)) {
+            percent = 100 - (current_date_time.subtract(midday).valueOf() * day_percent_per_ms)
+          } else if(current_date_time.isBetween(sunset, midnight)) {
+            percent = current_date_time.subtract(sunset).valueOf() * night_percent_per_ms
+          } else {
+            percent = 100 - (current_date_time.subtract(midnight).valueOf() * night_percent_per_ms)
+          }
 
           const location = {
             ...res.data.results,
+            cuttent_date: current_date,
             current_time: current_time,
-            mid_day: (res.data.results.sunrise + res.data.results.sunset) / 2,
-            mid_night: ((res.data.results.sunrise + res.data.results.sunset) / 2) + (12 * 60 * 60),
-            is_day: current_time > res.data.results.sunrise && current_time < res.data.results.sunset ? true : false,
+            midday: midday.format("HH:mm:ss"),
+            midnight: midnight.format("HH:mm:ss"),
+            percent: Number(percent.toFixed(2)),
+            is_day: moment().isAfter(sunrise) && moment().isBefore(sunset) ? true : false,
             lat: Number(position.coords.latitude),
             lon: Number(position.coords.longitude),
           }
