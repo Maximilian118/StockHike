@@ -91,7 +91,7 @@ export const getLocationInfo = (user, setUser) => {
 
           const location = {
             ...res.data.results,
-            cuttent_date: current_date,
+            current_date: current_date,
             current_time: current_time,
             midday: midday.format("HH:mm:ss"),
             midnight: midnight.format("HH:mm:ss"),
