@@ -44,61 +44,68 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
 export const getLocationInfo = (user, setUser) => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(position => {
-      if (!user.location || user.location.lat !== position.coords.latitude || user.location.lon !== position.coords.longitude) {
-        axios.get(`https://api.sunrise-sunset.org/json?lat=${position.coords.latitude}&lng=${position.coords.longitude}`).then(res => {
-          for (const property in res.data.results) {
-            res.data.results = {
-              ...res.data.results,
-              [property]: moment(res.data.results[property], ["h:mm:ss A"]).format("HH:mm:ss"),
-            }
-          }
+      const hourAgo = moment().subtract(1, "hour")
+      const lat = Number(position.coords.latitude.toFixed(4))
+      const lon = Number(position.coords.longitude.toFixed(4))
 
-          const current_date = moment().format("YYYY-MM-DD")
-          const current_time = moment().format("HH:mm:ss")
-          const current_date_time = moment(`${current_date} ${current_time}`)
+      if (!user.location || hourAgo.isAfter(user.location.current) || user.location.lat !== lat || user.location.lon !== lon) {
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=5f7c8248bb9c14a8c3f7709ca1247c31&units=metric`).then(res => {
 
-          const sunrise = moment(`${current_date} ${res.data.results.sunrise}`)
-          const sunset = moment(`${current_date} ${res.data.results.sunset}`)
-          const hour24 = moment(`${current_date} 24:00:00`)
-          const hour0 = moment(`${current_date} 00:00:00`)
+          const date = moment().format("YYYY-MM-DD")
+          const time = moment().format("HH:mm:ss")
+          const dateTime = moment(`${date} ${time}`)
 
-          const sunset_till_hour24 = hour24.clone().subtract(sunset)
-          const hour24_till_sunrise = sunrise.clone().subtract(hour0)
+          const sunrise = moment(`${date} ${moment.unix(res.data.sys.sunrise).format("HH:mm:ss")}`)
+          const sunset = moment(`${date} ${moment.unix(res.data.sys.sunset).format("HH:mm:ss")}`)
 
-          const midnight = sunset.clone().add(sunset_till_hour24.clone().add(hour24_till_sunrise).valueOf()/2)
+          const hour24 = moment(`${date} 24:00:00`)
+          const hour0 = moment(`${date} 00:00:00`)
+
+          const sunsetTillHour24 = hour24.clone().subtract(sunset)
+          const hour24TillSunrise = sunrise.clone().subtract(hour0)
+
+          const midnight = sunset.clone().add(sunsetTillHour24.clone().add(hour24TillSunrise).valueOf()/2)
           const midday = sunrise.clone().add(sunset.clone().subtract(sunrise).valueOf()/2)
 
-          const day_percent_per_ms = 100/midday.clone().subtract(sunrise).valueOf()
-          const night_percent_per_ms = 100/midnight.clone().subtract(sunset).valueOf()
+          const findYaxis = (dateTime, sunrise, midday, sunset, midnight) => {
+            const dayPercentPerMs = 100/midday.clone().subtract(sunrise).valueOf()
+            const nightPercentPerMs = 100/midnight.clone().subtract(sunset).valueOf()
 
-          let percent = 0
-        
-          if (current_date_time.isSame(sunrise) || current_date_time.isSame(sunset)) {
-            percent = 0
-          } else if (current_date_time.isSame(midday) || current_date_time.isSame(midnight)) {
-            percent = 100
-          }
-          
-          if (current_date_time.isBetween(sunrise, midday)) {
-            percent = current_date_time.subtract(sunrise).valueOf() * day_percent_per_ms
-          } else if(current_date_time.isBetween(midday, sunset)) {
-            percent = 100 - (current_date_time.subtract(midday).valueOf() * day_percent_per_ms)
-          } else if(current_date_time.isBetween(sunset, midnight)) {
-            percent = current_date_time.subtract(sunset).valueOf() * night_percent_per_ms
-          } else {
-            percent = 100 - (current_date_time.subtract(midnight).valueOf() * night_percent_per_ms)
+            let y = 0
+
+            if (dateTime.isSame(sunrise) || dateTime.isSame(sunset)) {
+              return 0
+            } else if (dateTime.isSame(midday) || dateTime.isSame(midnight)) {
+              return 100
+            }
+
+            if (dateTime.isBetween(sunrise, midday)) {
+              y = dateTime.subtract(sunrise).valueOf() * dayPercentPerMs
+            } else if(dateTime.isBetween(midday, sunset)) {
+              y = 100 - (dateTime.subtract(midday).valueOf() * dayPercentPerMs)
+            } else if(dateTime.isBetween(sunset, midnight)) {
+              y = dateTime.subtract(sunset).valueOf() * nightPercentPerMs
+            } else {
+              y = 100 - (dateTime.subtract(midnight).valueOf() * nightPercentPerMs)
+            }
+
+            return y
           }
 
           const location = {
-            ...res.data.results,
-            current_date: current_date,
-            current_time: current_time,
-            midday: midday.format("HH:mm:ss"),
-            midnight: midnight.format("HH:mm:ss"),
-            percent: Number(percent.toFixed(2)),
-            is_day: moment().isAfter(sunrise) && moment().isBefore(sunset) ? true : false,
-            lat: Number(position.coords.latitude),
-            lon: Number(position.coords.longitude),
+            temp: res.data.main,
+            weather: res.data.weather[0],
+            wind: res.data.wind,
+            country: res.data.sys.country,
+            current: dateTime.format(),
+            sunrise: sunrise.format(),
+            sunset: sunset.format(),
+            midday: midday.format(),
+            midnight: midnight.format(),
+            y: findYaxis(dateTime, sunrise, midday, sunset, midnight),
+            isDay: dateTime.isAfter(sunrise) && dateTime.isBefore(sunset) ? true : false,
+            lat: lat,
+            lon: lon,
           }
 
           setUser({
