@@ -93,6 +93,7 @@ export const getLocationInfo = (user, setUser) => {
           }
 
           const location = {
+            isDay: dateTime.isAfter(sunrise) && dateTime.isBefore(sunset) ? true : false,
             temp: res.data.main,
             weather: res.data.weather[0],
             wind: res.data.wind,
@@ -103,7 +104,6 @@ export const getLocationInfo = (user, setUser) => {
             midday: midday.format(),
             midnight: midnight.format(),
             y: findYaxis(dateTime, sunrise, midday, sunset, midnight),
-            isDay: dateTime.isAfter(sunrise) && dateTime.isBefore(sunset) ? true : false,
             lat: lat,
             lon: lon,
           }
