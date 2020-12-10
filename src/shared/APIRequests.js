@@ -49,7 +49,7 @@ export const getLocationInfo = (user, setUser) => {
       const lon = Number(position.coords.longitude.toFixed(3))
 
       if (!user.location || hourAgo.isAfter(user.location.current) || user.location.lat !== lat || user.location.lon !== lon) {
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=5f7c8248bb9c14a8c3f7709ca1247c31&units=metric`).then(res => {
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OWM}&units=metric`).then(res => {
 
           const date = moment().format("YYYY-MM-DD")
           const time = moment().format("HH:mm:ss")
