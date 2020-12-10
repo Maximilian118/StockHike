@@ -45,8 +45,8 @@ export const getLocationInfo = (user, setUser) => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(position => {
       const hourAgo = moment().subtract(1, "hour")
-      const lat = Number(position.coords.latitude.toFixed(4))
-      const lon = Number(position.coords.longitude.toFixed(4))
+      const lat = Number(position.coords.latitude.toFixed(3))
+      const lon = Number(position.coords.longitude.toFixed(3))
 
       if (!user.location || hourAgo.isAfter(user.location.current) || user.location.lat !== lat || user.location.lon !== lon) {
         axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=5f7c8248bb9c14a8c3f7709ca1247c31&units=metric`).then(res => {
