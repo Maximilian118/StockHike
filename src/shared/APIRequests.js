@@ -48,12 +48,9 @@ export const getLocationInfo = (user, setUser) => {
       const lat = Number(position.coords.latitude.toFixed(3))
       const lon = Number(position.coords.longitude.toFixed(3))
 
-      if (!user.location || hourAgo.isAfter(user.location.current) || user.location.lat !== lat || user.location.lon !== lon) {
+      if (!user.location || hourAgo.isAfter(user.location.now) || user.location.lat !== lat || user.location.lon !== lon) {
         axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OWM}&units=metric`).then(res => {
-
           const date = moment().format("YYYY-MM-DD")
-          const time = moment().format("HH:mm:ss")
-          const dateTime = moment(`${date} ${time}`)
 
           const sunrise = moment(`${date} ${moment.unix(res.data.sys.sunrise).format("HH:mm:ss")}`)
           const sunset = moment(`${date} ${moment.unix(res.data.sys.sunset).format("HH:mm:ss")}`)
@@ -67,43 +64,59 @@ export const getLocationInfo = (user, setUser) => {
           const midnight = sunset.clone().add(sunsetTillHour24.clone().add(hour24TillSunrise).valueOf()/2)
           const midday = sunrise.clone().add(sunset.clone().subtract(sunrise).valueOf()/2)
 
-          const findYaxis = (dateTime, sunrise, midday, sunset, midnight) => {
+          const findXY = (sunrise, midday, sunset, midnight) => {
             const dayPercentPerMs = 100/midday.clone().subtract(sunrise).valueOf()
             const nightPercentPerMs = 100/midnight.clone().subtract(sunset).valueOf()
 
+            const now = moment()
+
             let y = 0
+            let x = 50
 
-            if (dateTime.isSame(sunrise) || dateTime.isSame(sunset)) {
-              return 0
-            } else if (dateTime.isSame(midday) || dateTime.isSame(midnight)) {
-              return 100
+            if (now.isSame(sunrise) || now.isSame(sunset)) {
+              return {
+                y: 0,
+                x: 0,
+              }
+            } else if (now.isSame(midday) || now.isSame(midnight)) {
+              return {
+                y: 100,
+                x: 50,
+              }
             }
 
-            if (dateTime.isBetween(sunrise, midday)) {
-              y = dateTime.subtract(sunrise).valueOf() * dayPercentPerMs
-            } else if(dateTime.isBetween(midday, sunset)) {
-              y = 100 - (dateTime.subtract(midday).valueOf() * dayPercentPerMs)
-            } else if(dateTime.isBetween(sunset, midnight)) {
-              y = dateTime.subtract(sunset).valueOf() * nightPercentPerMs
+            if (now.isBetween(sunrise, midday)) {
+              y = now.subtract(sunrise).valueOf() * dayPercentPerMs
+              x = y / 2
+            } else if(now.isBetween(midday, sunset)) {
+              y = 100 - (now.subtract(midday).valueOf() * dayPercentPerMs)
+              x = 100 - y
+            } else if(now.isBetween(sunset, midnight)) {
+              y = now.subtract(sunset).valueOf() * nightPercentPerMs
+              x = y / 2
             } else {
-              y = 100 - (dateTime.subtract(midnight).valueOf() * nightPercentPerMs)
+              y = 100 - (now.subtract(midnight).valueOf() * nightPercentPerMs)
+              x = 100 - y
             }
 
-            return y
+            return {
+              y: Number(y.toFixed(2)),
+              x: Number(x.toFixed(2)),
+            }
           }
 
           const location = {
-            isDay: dateTime.isAfter(sunrise) && dateTime.isBefore(sunset) ? true : false,
+            xy: findXY(sunrise, midday, sunset, midnight),
+            isDay: moment().isAfter(sunrise) && moment().isBefore(sunset) ? true : false,
             temp: res.data.main,
             weather: res.data.weather[0],
             wind: res.data.wind,
             country: res.data.sys.country,
-            current: dateTime.format(),
+            now: moment().format(),
             sunrise: sunrise.format(),
             sunset: sunset.format(),
             midday: midday.format(),
             midnight: midnight.format(),
-            y: findYaxis(dateTime, sunrise, midday, sunset, midnight),
             lat: lat,
             lon: lon,
           }
