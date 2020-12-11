@@ -7,7 +7,7 @@ import SunMoon from '../SunMoon'
 
 const Background = ({ user }) => 
   <div className="background">
-    {user.location.xy && <SunMoon user={user}/>}
+    <SunMoon user={user}/>
     <Dash user={user}/>
     <Candles user={user}/>
     <Footer user={user}/>

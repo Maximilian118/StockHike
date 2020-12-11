@@ -64,49 +64,35 @@ export const getLocationInfo = (user, setUser) => {
           const midnight = sunset.clone().add(sunsetTillHour24.clone().add(hour24TillSunrise).valueOf()/2)
           const midday = sunrise.clone().add(sunset.clone().subtract(sunrise).valueOf()/2)
 
-          const findXY = (sunrise, midday, sunset, midnight) => {
+          const findY = (sunrise, midday, sunset, midnight) => {
             const dayPercentPerMs = 100/midday.clone().subtract(sunrise).valueOf()
             const nightPercentPerMs = 100/midnight.clone().subtract(sunset).valueOf()
 
             const now = moment()
 
             let y = 0
-            let x = 50
 
             if (now.isSame(sunrise) || now.isSame(sunset)) {
-              return {
-                y: 0,
-                x: 0,
-              }
+              return 0
             } else if (now.isSame(midday) || now.isSame(midnight)) {
-              return {
-                y: 100,
-                x: 50,
-              }
+              return 100
             }
 
             if (now.isBetween(sunrise, midday)) {
               y = now.subtract(sunrise).valueOf() * dayPercentPerMs
-              x = y / 2
             } else if(now.isBetween(midday, sunset)) {
               y = 100 - (now.subtract(midday).valueOf() * dayPercentPerMs)
-              x = 100 - y
             } else if(now.isBetween(sunset, midnight)) {
               y = now.subtract(sunset).valueOf() * nightPercentPerMs
-              x = y / 2
             } else {
               y = 100 - (now.subtract(midnight).valueOf() * nightPercentPerMs)
-              x = 100 - y
             }
 
-            return {
-              y: Number(y.toFixed(2)),
-              x: Number(x.toFixed(2)),
-            }
+            return Number(y.toFixed(2))
           }
 
           const location = {
-            xy: findXY(sunrise, midday, sunset, midnight),
+            y: findY(sunrise, midday, sunset, midnight),
             isDay: moment().isAfter(sunrise) && moment().isBefore(sunset) ? true : false,
             temp: res.data.main,
             weather: res.data.weather[0],
