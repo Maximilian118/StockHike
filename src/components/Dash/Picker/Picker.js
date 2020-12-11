@@ -7,4 +7,4 @@ const Picker = ({ user }) =>
     {user.symbols.map(symbol => <PickerItem key={symbol.symbol} symbol={symbol}/>)}
   </div>
 
-export default Picker 
+export default Picker
