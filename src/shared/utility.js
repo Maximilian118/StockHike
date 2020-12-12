@@ -24,3 +24,15 @@ export const setColours = sunriseSunset => {
     return defaults
   }
 }
+
+// Remove a symbol the user.symbols array.
+export const removeSymbol = (user, setUser, symbol) => {
+  const removed = user.symbols.filter(e => e.symbol !== symbol.symbol)
+
+  setUser({
+    ...user,
+    symbols: removed,
+  })
+
+  localStorage.setItem("symbols", JSON.stringify(removed))
+}
