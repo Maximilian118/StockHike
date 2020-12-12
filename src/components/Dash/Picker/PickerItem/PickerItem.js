@@ -1,6 +1,6 @@
 import React from 'react'
 import './_PickerItem.scss'
-import { ChevronUp, ChevronDown } from 'react-feather'
+import { ChevronUp, ChevronDown, X } from 'react-feather'
 
 const PickerItem = ({ symbol, i, total }) => 
   <div className={`pickeritem ${symbol.y && `bg`}`}>
@@ -10,6 +10,7 @@ const PickerItem = ({ symbol, i, total }) =>
     {!symbol.y && <div className="btns">
       {i !== total - 1 && <ChevronDown style={{ marginRight: i === 0 ? 18 : 0 }}/>}
       {i !== 0 && <ChevronUp/>}
+      <X className="delete"/>
     </div>}
   </div>
 
