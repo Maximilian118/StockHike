@@ -3,7 +3,7 @@ import './_PickerItem.scss'
 import { ChevronUp, ChevronDown, X } from 'react-feather'
 
 const PickerItem = ({ symbol, i, total }) => 
-  <div className={`pickeritem ${symbol.y && `bg`}`}>
+  <div className={`picker-item ${symbol.y && `bg`}`}>
     <div className="symbol-colour-circle" style={{ background: symbol.colour }}/>
     <p className="symbol">{symbol.symbol}</p>
     <p className="last-price">{symbol.candles ? Number(symbol.candles.data.slice(-1)[0].y).toFixed(2) : symbol.data.y}</p>

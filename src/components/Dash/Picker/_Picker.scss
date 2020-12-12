@@ -7,6 +7,10 @@
   align-content: flex-start;
 
   &:hover {
+    .add-item {
+      opacity: 1;
+    }
+
     .last-price {
       opacity: 0;
     }
