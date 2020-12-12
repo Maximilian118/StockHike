@@ -5,4 +5,14 @@
   display: flex;
   flex-flow: column wrap;
   align-content: flex-start;
+
+  &:hover {
+    .last-price {
+      opacity: 0;
+    }
+
+    .btns {
+      opacity: 1;
+    }
+  }
 }
