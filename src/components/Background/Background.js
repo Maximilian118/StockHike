@@ -10,7 +10,7 @@ const Background = ({ user, exchange, setExchange }) =>
   <div className="background">
     <SunMoon user={user}/>
     <Dash user={user} exchange={exchange}/>
-    <Candles user={user}/>
+    <Candles user={user} exchange={exchange}/>
     {exchange.display && <Exchange exchange={exchange} setExchange={setExchange}/>}
     <Footer user={user}/>
   </div>

@@ -27,7 +27,7 @@ export const logout = () => {
 export const checkExchangeLS = () => {
   let exchange = localStorage.getItem("exchange") ? JSON.parse(localStorage.getItem("exchange")) : { display: false }
 
-  if (exchange.display === true) {
+  if (exchange.display) {
     exchange = {
       ...exchange,
       display: false,
