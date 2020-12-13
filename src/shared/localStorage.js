@@ -1,4 +1,4 @@
-export const checkLocalStorage = () => {
+export const checkUserLS = () => {
   const token = localStorage.getItem("token")
   const refreshToken = localStorage.getItem("refresh_token")
   
@@ -22,4 +22,17 @@ export const logout = () => {
     location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : {},
     symbols: JSON.parse(localStorage.getItem("defaults")) ? JSON.parse(localStorage.getItem("symbols")) : [],
   }
+}
+
+export const checkExchangeLS = () => {
+  let exchange = localStorage.getItem("exchange") ? JSON.parse(localStorage.getItem("exchange")) : { display: false }
+
+  if (exchange.display === true) {
+    exchange = {
+      ...exchange,
+      display: false,
+    }
+  }
+
+  return exchange
 }
