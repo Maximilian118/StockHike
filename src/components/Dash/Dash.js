@@ -3,9 +3,9 @@ import './_Dash.scss'
 import Picker from './Picker'
 import InfoBar from './InfoBar'
 
-const Dash = ({ user }) => 
+const Dash = ({ user, exchange }) => 
   <div className="dash">
-    <Picker user={user}/>
+    <Picker user={user} exchange={exchange}/>
     <InfoBar/>
   </div>
 

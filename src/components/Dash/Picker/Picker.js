@@ -3,7 +3,7 @@ import './_Picker.scss'
 import PickerItem from './PickerItem'
 import AddItem from './AddItem'
 
-const Picker = ({ user }) => 
+const Picker = ({ user, exchange }) => 
   <div className="picker">
     {user.symbols.map((symbol, i) => 
       <PickerItem 
@@ -12,7 +12,7 @@ const Picker = ({ user }) =>
       i={i} 
       total={user.symbols.length}
     />)}
-    <AddItem/>
+    {!exchange.display && <AddItem/>}
   </div>
 
 export default Picker
