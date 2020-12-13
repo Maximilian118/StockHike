@@ -41,6 +41,22 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   })
 }
 
+export const getExchange = (exchange, setExchange) => {
+  axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=${exchange}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
+    const exchangeObj = {
+      exchange: exchange,
+      data: res.data,
+    }
+  
+    setExchange(exchangeObj)
+    
+    localStorage.setItem("exchange", JSON.stringify(exchangeObj))
+    process.env.NODE_ENV === 'development' && console.log(res)
+  }).catch(err => {
+    process.env.NODE_ENV === 'development' && console.log(err)
+  })
+}
+
 export const getLocationInfo = (user, setUser) => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(position => {
