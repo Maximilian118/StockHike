@@ -5,7 +5,7 @@ import { setColours } from '../../shared/utility'
 import PickerItem from '../Dash/Picker/PickerItem'
 
 const Candles = ({ user, exchange }) => {
-  const colours = user.symbols.length !== 0 ? user.symbols.map(symbol => {
+  const colours = user.symbols && user.symbols.length !== 0 ? user.symbols.map(symbol => {
     if (exchange.display) {
       return "#ebe3d4"
     } else {
@@ -15,7 +15,7 @@ const Candles = ({ user, exchange }) => {
 
   return (
     <div className="candles">
-      {user.symbols.length > 0 && <ResponsiveLine
+      {user.symbols && user.symbols.length > 0 && <ResponsiveLine
         data={user.symbols.map(symbol => symbol.candles)}
         colors={colours}
         xScale={{ type: 'point' }}

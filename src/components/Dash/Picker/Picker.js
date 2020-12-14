@@ -5,7 +5,7 @@ import AddItem from './AddItem'
 
 const Picker = ({ user, exchange }) => 
   <div className="picker">
-    {user.symbols.map((symbol, i) => 
+    {user.symbols && user.symbols.map((symbol, i) => 
       <PickerItem 
       key={i} 
       symbol={symbol} 

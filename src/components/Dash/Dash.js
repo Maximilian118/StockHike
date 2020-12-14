@@ -6,7 +6,7 @@ import InfoBar from './InfoBar'
 const Dash = ({ user, exchange }) => 
   <div className="dash">
     <Picker user={user} exchange={exchange}/>
-    <InfoBar/>
+    <InfoBar exchange={exchange}/>
   </div>
 
 export default Dash

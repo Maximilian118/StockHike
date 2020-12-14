@@ -4,7 +4,7 @@ import { ResponsiveLine } from '@nivo/line'
 
 const Footer = ({ user }) => 
   <div className="footer">
-    {user.symbols.length > 0 && <ResponsiveLine
+    {user.symbols && user.symbols.length > 0 && <ResponsiveLine
       data={[user.symbols[0].candles]}
       colors={['#3a3a3c']}
       xScale={{ type: 'point' }}

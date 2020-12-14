@@ -13,7 +13,7 @@ const App = () => {
   const [ exchange, setExchange ] = useState(checkExchangeLS())
 
   useEffect(() => {
-    if (user.symbols.length > 0) {
+    if (user.symbols && user.symbols.length > 0) {
       getLocationInfo(user, setUser)
     } else {
       getDefaultCandles('D', moment().subtract(1, 'year').unix(), moment().unix(), user, setUser)
