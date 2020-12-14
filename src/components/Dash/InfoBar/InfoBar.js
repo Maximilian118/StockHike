@@ -4,7 +4,7 @@ import moment from 'moment'
 
 const InfoBar = ({ exchange }) => 
   <div className="infobar">
-    {exchange.data ? 
+    {exchange.display && exchange.data ? 
       <h6>{`Exchange: ${exchange.exchange}`}</h6> :
       <h6>{moment().subtract(1, 'year').format("D MMM YYYY")} - {moment().format("D MMM YYYY")}</h6>
     }
