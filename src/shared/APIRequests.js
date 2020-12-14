@@ -46,7 +46,7 @@ export const getExchange = (exchangeSymbol, exchange, setExchange) => {
     const exchangeObj = {
       ...exchange,
       exchange: exchangeSymbol,
-      data: res.data,
+      data: res.data.map(symbol => symbol.symbol),
     }
   
     setExchange(exchangeObj)
