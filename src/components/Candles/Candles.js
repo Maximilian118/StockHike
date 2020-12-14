@@ -7,7 +7,7 @@ import PickerItem from '../Dash/Picker/PickerItem'
 const Candles = ({ user, exchange }) => {
   const colours = user.symbols.length !== 0 ? user.symbols.map(symbol => {
     if (exchange.display) {
-      return "#b6b0a6"
+      return "#ebe3d4"
     } else {
       return symbol.colour
     }
