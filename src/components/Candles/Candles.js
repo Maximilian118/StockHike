@@ -2,7 +2,7 @@ import React from 'react'
 import './_Candles.scss'
 import { ResponsiveLine } from '@nivo/line'
 import { setColours } from '../../shared/utility'
-import PickerItem from '../Dash/Picker/PickerItem'
+import CandlesHover from './CandlesHover'
 
 const Candles = ({ user, exchange }) => {
   const colours = user.symbols && user.symbols.length !== 0 ? user.symbols.map(symbol => {
@@ -29,7 +29,7 @@ const Candles = ({ user, exchange }) => {
         enableCrosshair={false}
         useMesh={true}
         tooltip={value => 
-          <PickerItem symbol={{
+          <CandlesHover symbol={{
             ...value.point,
             colour: value.point.color,
             symbol: value.point.serieId,

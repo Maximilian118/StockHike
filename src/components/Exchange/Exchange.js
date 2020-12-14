@@ -5,7 +5,7 @@ import ExchangeSymbol from './ExchangeSymbol'
 
 const Exchange = ({ exchange, setExchange }) => {
   useEffect(() => {
-    !exchange.data && getExchange("US", exchange, setExchange)
+    !exchange.data && getExchange("MI", exchange, setExchange)
   }, [exchange, setExchange])
 
   return (
