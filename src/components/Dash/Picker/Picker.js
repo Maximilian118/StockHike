@@ -11,6 +11,7 @@ const Picker = ({ user, exchange }) =>
       symbol={symbol} 
       i={i} 
       total={user.symbols.length}
+      exchange={exchange}
     />)}
     {!exchange.display && <AddItem/>}
   </div>
