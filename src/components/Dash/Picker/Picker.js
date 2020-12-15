@@ -2,6 +2,7 @@ import React from 'react'
 import './_Picker.scss'
 import PickerItem from './PickerItem'
 import AddItem from './AddItem'
+import Done from './Done'
 
 const Picker = ({ user, exchange }) => 
   <div className="picker">
@@ -13,7 +14,7 @@ const Picker = ({ user, exchange }) =>
       total={user.symbols.length}
       exchange={exchange}
     />)}
-    {!exchange.display && <AddItem/>}
+    {exchange.display ? <Done/> : <AddItem/>}
   </div>
 
 export default Picker
