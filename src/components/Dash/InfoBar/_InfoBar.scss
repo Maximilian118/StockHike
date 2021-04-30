@@ -4,32 +4,14 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
-  .exchange-select{
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
+  .back {
     transition: 0.3s;
-
-    h6 {
-      cursor: pointer !important;
-    }
-
-    svg {
-      height: 14px;
-      width: 14px;
-      margin-left: 4px;
-      transition: 0.3s;
-    }
+    cursor: pointer !important;
 
     &:hover {
       color: black;
     }
-  }
-
-  .flipSVG {
-    transform: rotate(180deg);
   }
 }

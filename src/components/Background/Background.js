@@ -9,7 +9,7 @@ import Exchange from '../Exchange'
 const Background = ({ user, exchange, setExchange }) => 
   <div className="background">
     <SunMoon user={user}/>
-    <Dash user={user} exchange={exchange}/>
+    <Dash user={user} exchange={exchange} setExchange={setExchange}/>
     <Candles user={user} exchange={exchange}/>
     {exchange.display && <Exchange exchange={exchange} setExchange={setExchange}/>}
     <Footer user={user}/>
