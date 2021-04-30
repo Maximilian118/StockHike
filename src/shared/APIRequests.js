@@ -41,7 +41,7 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   })
 }
 
-export const getExchange = (exchangeSymbol, exchange, setExchange) => {
+export const getExchangeInfo = (exchangeSymbol, exchange, setExchange) => {
   axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=${exchangeSymbol}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
     const exchangeObj = {
       ...exchange,

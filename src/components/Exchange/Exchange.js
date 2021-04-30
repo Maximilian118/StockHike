@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { getExchange } from '../../shared/APIRequests'
+import { getExchangeInfo } from '../../shared/APIRequests'
 import './_Exchange.scss'
 import ExchangeSymbol from './ExchangeSymbol'
 
 const Exchange = ({ exchange, setExchange }) => {
   useEffect(() => {
-    !exchange.data && getExchange("MI", exchange, setExchange)
+    !exchange.data && getExchangeInfo("MI", exchange, setExchange)
   }, [exchange, setExchange])
 
   return (
