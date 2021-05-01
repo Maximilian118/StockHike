@@ -23,16 +23,3 @@ export const logout = () => {
     symbols: JSON.parse(localStorage.getItem("defaults")) ? JSON.parse(localStorage.getItem("symbols")) : [],
   }
 }
-
-export const checkExchangeLS = () => {
-  let exchange = localStorage.getItem("exchange") ? JSON.parse(localStorage.getItem("exchange")) : { display: false }
-
-  if (exchange.display) {
-    exchange = {
-      ...exchange,
-      display: false,
-    }
-  }
-
-  return exchange
-}

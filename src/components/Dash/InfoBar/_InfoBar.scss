@@ -5,13 +5,4 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  .back {
-    transition: 0.3s;
-    cursor: pointer !important;
-
-    &:hover {
-      color: black;
-    }
-  }
 }

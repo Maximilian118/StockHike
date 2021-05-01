@@ -4,13 +4,9 @@ import { ResponsiveLine } from '@nivo/line'
 import { setColours } from '../../shared/utility'
 import CandlesHover from './CandlesHover'
 
-const Candles = ({ user, exchange }) => {
+const Candles = ({ user }) => {
   const colours = user.symbols && user.symbols.length !== 0 ? user.symbols.map(symbol => {
-    if (exchange.display) {
-      return "#ebe3d4"
-    } else {
-      return symbol.colour
-    }
+    return symbol.colour
   }) : setColours()
 
   return (

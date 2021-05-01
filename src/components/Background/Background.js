@@ -4,14 +4,12 @@ import Dash from '../Dash'
 import Candles from '../Candles'
 import Footer from '../Footer'
 import SunMoon from '../SunMoon'
-import Exchange from '../Exchange'
 
-const Background = ({ user, exchange, setExchange }) => 
+const Background = ({ user }) => 
   <div className="background">
     <SunMoon user={user}/>
-    <Dash user={user} exchange={exchange} setExchange={setExchange}/>
-    <Candles user={user} exchange={exchange}/>
-    {exchange.display && <Exchange exchange={exchange} setExchange={setExchange}/>}
+    <Dash user={user}/>
+    <Candles user={user}/>
     <Footer user={user}/>
   </div>
 
