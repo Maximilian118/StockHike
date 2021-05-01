@@ -1,11 +1,11 @@
 import React from 'react'
 import './_Dash.scss'
-import PickerBar from "./PickerBar"
+import TickerBar from "./TickerBar"
 import InfoBar from './InfoBar'
 
 const Dash = ({ user }) => 
   <div className="dash">
-    <PickerBar user={user}/>
+    <TickerBar user={user}/>
     <InfoBar/>
   </div>
 

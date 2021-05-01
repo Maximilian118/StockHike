@@ -1,0 +1,15 @@
+.picker {
+  min-height: 25px;
+  min-width: 140px;
+  display: flex;
+
+  .picker-col {
+    height: 75px;
+    width: 130px;
+    margin-right: 10px;
+    background: burlywood;
+    display: flex;
+    flex-flow: column nowrap;
+    overflow-y: auto;
+  }
+}

@@ -1,10 +1,10 @@
 import React from 'react'
-import './_PickerItem.scss'
+import './_Ticker.scss'
 import { ChevronUp, ChevronDown, X } from 'react-feather'
 import { removeSymbol } from '../../../../shared/utility'
 
-const PickerItem = ({ symbol, i, total, user, setUser }) =>
-  <div className="picker-item">
+const Ticker = ({ symbol, i, total, user, setUser }) =>
+  <div className="ticker">
     <div className="symbol-colour-circle" style={{ background: symbol.colour }}/>
     <p className="symbol">{symbol.symbol}</p>
     <p className="last-price">{Number(symbol.candles.data.slice(-1)[0].y).toFixed(2)}</p>
@@ -15,4 +15,4 @@ const PickerItem = ({ symbol, i, total, user, setUser }) =>
     </div>
   </div>
 
-export default PickerItem
+export default Ticker

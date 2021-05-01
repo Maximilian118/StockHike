@@ -1,4 +1,4 @@
-.picker-bar {
+.ticker-bar {
   max-height: 75px;
   min-height: 30px;
   width: 100%;
@@ -7,7 +7,7 @@
   align-content: flex-start;
 
   &:hover {
-    .add-item {
+    .new {
       opacity: 1;
     }
 

@@ -1,16 +1,17 @@
 import React, { useContext } from 'react'
 import { Context } from '../../../App'
-import './_PickerBar.scss'
-import PickerItem from './PickerItem'
-import AddItem from './AddItem'
+import './_TickerBar.scss'
+import Ticker from './Ticker'
+import New from './New'
+import Picker from './Picker'
 
-const PickerBar = ({ user }) => {
+const TickerBar = ({ user }) => {
   const { setUser, picking, setPicking } = useContext(Context)
 
   return (
-    <div className="picker-bar">
+    <div className="ticker-bar">
       {user.symbols && user.symbols.map((symbol, i) => 
-        <PickerItem 
+        <Ticker 
         key={i} 
         symbol={symbol}
         i={i} 
@@ -18,8 +19,10 @@ const PickerBar = ({ user }) => {
         user={user}
         setUser={setUser}
       />)}
-      {!picking && 
-        <AddItem 
+      {picking ? 
+        <Picker/>
+      : 
+        <New 
         picking={picking} 
         setPicking={setPicking}
       />}
@@ -27,4 +30,4 @@ const PickerBar = ({ user }) => {
   )
 }
 
-export default PickerBar
+export default TickerBar
