@@ -1,10 +1,10 @@
 import React from 'react'
-import './_Picker.scss'
+import './_PickerBar.scss'
 import PickerItem from './PickerItem'
 import AddItem from './AddItem'
 
-const Picker = ({ user }) => 
-  <div className="picker">
+const PickerBar = ({ user }) => 
+  <div className="picker-bar">
     {user.symbols && user.symbols.map((symbol, i) => 
       <PickerItem 
       key={i} 
@@ -15,4 +15,4 @@ const Picker = ({ user }) =>
     <AddItem/>
   </div>
 
-export default Picker
+export default PickerBar
