@@ -25,7 +25,7 @@ const App = () => {
 
   return (
     <Context.Provider value={{ user, setUser, loading, setLoading, picking, setPicking }}>
-      <Background user={user}/>
+      <Background user={user} setUser={setUser}/>
     </Context.Provider>
   )
 }
