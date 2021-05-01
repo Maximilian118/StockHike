@@ -5,10 +5,10 @@ import Candles from '../Candles'
 import Footer from '../Footer'
 import SunMoon from '../SunMoon'
 
-const Background = ({ user, setUser }) => 
+const Background = ({ user }) => 
   <div className="background">
     <SunMoon user={user}/>
-    <Dash user={user} setUser={setUser}/>
+    <Dash user={user}/>
     <Candles user={user}/>
     <Footer user={user}/>
   </div>
