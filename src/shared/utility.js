@@ -39,11 +39,11 @@ export const removeSymbol = (user, setUser, symbol) => {
 
 // List of Supported FinnHub Exchanges
 export const finnHubExchanges = {
-  stock: ["AS", "AT", "AX", "BA", "BC", "BD", "BE", "BK", "BO", "BR", "CN", "CO", "CR", "DB", "DE", "DU", "F", 
+  Stock: ["AS", "AT", "AX", "BA", "BC", "BD", "BE", "BK", "BO", "BR", "CN", "CO", "CR", "DB", "DE", "DU", "F", 
   "HE", "HK", "HM", "IC", "IR", "IS", "JK", "JO", "KL", "KQ", "KS", "L", "LN", "LS", "MC", "ME", "MI", "MU", 
   "MX", "NE", "NL", "NS", "NZ", "OL", "PA", "PM", "PR", "QA", "RG", "SA", "SG", "SI", "SN", "SR", "SS", "ST", 
   "SW", "SZ", "T", "TA", "TL", "TO", "TW", "US", "V", "VI", "VN", "VS", "WA", "HA", "SX", "TG", "SC"],
-  forex: ["oanda", "fxcm", "forex.com", "pepperstone", "fxpro", "icmtrader", "ic markets", "octafx", "fxpig"],
-  crypto: ["BITFINEX", "KUCOIN", "BITTREX", "KRAKEN", "HUOBI", "BITMEX", "COINBASE", "GEMINI", "OKEX", "BINANCE", 
+  Forex: ["oanda", "fxcm", "forex.com", "pepperstone", "fxpro", "icmtrader", "ic markets", "octafx", "fxpig"],
+  Crypto: ["BITFINEX", "KUCOIN", "BITTREX", "KRAKEN", "HUOBI", "BITMEX", "COINBASE", "GEMINI", "OKEX", "BINANCE", 
   "FXPIG", "POLONIEX", "ZB", "HITBTC"],
 }
