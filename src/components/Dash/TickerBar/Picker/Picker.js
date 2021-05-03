@@ -4,11 +4,11 @@ import PickerTicker from './PickerTicker'
 import { finnHubExchanges } from '../../../../shared/utility'
 
 const Picker = () => {
-  const [ pickerStage, setPickerStage ] = useState("")
+  const [ exchange, setExchange ] = useState("")
 
   let exchangeArr = null
   Object.entries(finnHubExchanges).map(type => {
-    if (pickerStage === type[0]) {
+    if (exchange === type[0]) {
       exchangeArr = type[1]
     }
   })
@@ -20,7 +20,7 @@ const Picker = () => {
           <PickerTicker 
           key={i} 
           symbol={symbol}
-          setPickerStage={setPickerStage}
+          setExchange={setExchange}
         />)}
       </div>
       <div className="picker-col">
