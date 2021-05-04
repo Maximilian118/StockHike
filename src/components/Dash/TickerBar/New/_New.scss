@@ -6,20 +6,22 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   margin-right: 10px;
   overflow: hidden;
   opacity: 0;
   transition: 0.3s;
   cursor: pointer;
+  position: relative;
 
   p {
     cursor: pointer !important;
   }
 
   svg {
-    width: 16px;
-    height: 16px;
+    position: absolute;
+    right: 0;
+    width: 18px;
+    height: 18px;
   }
 
   &:hover {
