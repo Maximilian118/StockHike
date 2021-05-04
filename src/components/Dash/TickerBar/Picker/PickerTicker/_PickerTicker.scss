@@ -6,7 +6,6 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-right: 10px;
   position: relative;
   overflow: hidden;
@@ -14,17 +13,42 @@
   cursor: pointer;
 
   p {
-    padding-left: 12px;
     cursor: pointer !important;
   }
 
   svg {
+    position: absolute;
+    right: 0;
     width: 18px;
     height: 18px;
   }
 
   &:hover {
     color: black;
+  }
+
+  .chevron-2, .chevron-3 {
+    opacity: 0;
+  }
+
+  .chevron-2 {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .chevron-3 {
+    color: rgba(0, 0, 0, 0.2);
+  }
+
+  .move-chevron-2 {
+    transform: translateX(-6px);
+    opacity: 1;
+    transition: 0.2s;
+  }
+
+  .move-chevron-3 {
+    transform: translateX(-12px);
+    opacity: 1;
+    transition: 0.2s;
   }
 }
 
