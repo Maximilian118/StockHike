@@ -1,3 +1,5 @@
+@import "../../../../../scss/variables";
+
 .picker-ticker {
   height: 25px;
   width: 130px;
@@ -24,4 +26,8 @@
   &:hover {
     color: black;
   }
+}
+
+.exchange-selected {
+  color: black;
 }

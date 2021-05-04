@@ -11,14 +11,19 @@
   overflow: hidden;
   opacity: 0;
   transition: 0.3s;
+  cursor: pointer;
+
+  p {
+    cursor: pointer !important;
+  }
 
   svg {
     width: 16px;
     height: 16px;
-    transition: 0.3s;
-    cursor: pointer;
+  }
 
-    &:hover {
+  &:hover {
+    svg {
       color: $new;
     }
   }

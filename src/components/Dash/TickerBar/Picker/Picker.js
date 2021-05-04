@@ -7,7 +7,7 @@ const Picker = () => {
   const [ exchange, setExchange ] = useState("")
 
   let exchangeArr = null
-  Object.entries(finnHubExchanges).map(type => {
+  Object.entries(finnHubExchanges).forEach(type => {
     if (exchange === type[0]) {
       exchangeArr = type[1]
     }
@@ -20,6 +20,7 @@ const Picker = () => {
           <PickerTicker 
           key={i} 
           symbol={symbol}
+          exchange={exchange}
           setExchange={setExchange}
         />)}
       </div>
