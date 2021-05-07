@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './_Picker.scss'
 import PickerTicker from './PickerTicker'
-import PickerCol from './PickerCol'
 import { finnHubExchanges } from '../../../../shared/utility'
+import { List } from 'react-virtualized'
 
 const Picker = () => {
   const [ type, setType ] = useState("")
   const [ exchange, setExchange ] = useState("")
   const [ symbols, setSymbols ] = useState([])
-  
-  console.log(type, exchange)
 
   let exchangeArr = []
   Object.entries(finnHubExchanges).forEach(typ => {
@@ -27,7 +25,7 @@ const Picker = () => {
 
   return (
     <div className="picker">
-      <PickerCol>
+      <div className="picker-col">
         {Object.keys(finnHubExchanges).map((symbol, i) => 
           <PickerTicker 
           key={i} 
@@ -35,24 +33,40 @@ const Picker = () => {
           type={type}
           setType={setType}
         />)}
-      </PickerCol>
-      <PickerCol>
-        {exchangeArr.map((symbol, i) => 
-          <PickerTicker
-          key={i}
-          symbol={symbol}
-          exchange={exchange}
-          setExchange={setExchange}
-          setSymbols={setSymbols}
-        />)}
-      </PickerCol>
-      <PickerCol>
-        {symbols.map((symbol, i) => 
-          <PickerTicker
-          key={i}
-          symbol={symbol}
-        />)}
-      </PickerCol>
+      </div>
+      <List
+        width={140}
+        height={75}
+        rowHeight={25}
+        rowCount={exchangeArr.length}
+        rowRenderer={({key, index, style, parent}) => {
+          return (
+            <PickerTicker
+              key={key}
+              style={style}
+              symbol={exchangeArr[index]}
+              exchange={exchange}
+              setExchange={setExchange}
+              setSymbols={setSymbols}
+            />
+          )
+        }}
+      />
+      <List
+        width={140}
+        height={75}
+        rowHeight={25}
+        rowCount={symbols.length}
+        rowRenderer={({key, index, style, parent}) => {
+          return (
+            <PickerTicker
+              key={key}
+              style={style}
+              symbol={symbols[index]}
+            />
+          )
+        }}
+      />
     </div>
   )
 }

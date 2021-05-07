@@ -3,7 +3,7 @@ import './_PickerTicker.scss'
 import { ChevronRight } from 'react-feather'
 import { getExchangeInfo } from '../../../../../shared/APIRequests'
 
-const PickerTicker = ({ symbol, type, setType, exchange, setExchange, setSymbols }) => {
+const PickerTicker = ({ symbol, type, setType, exchange, setExchange, setSymbols, style }) => {
   let isClicked = false
 
   if (type === symbol) {
@@ -19,7 +19,8 @@ const PickerTicker = ({ symbol, type, setType, exchange, setExchange, setSymbols
   
   return (
     <div 
-      className={`picker-ticker ${isClicked && `exchange-selected`}`} 
+      className={`picker-ticker ${isClicked && `exchange-selected`}`}
+      style={style}
       onClick={() => {
         setType && setType(symbol)
         setExchange && exchangeSelected()
