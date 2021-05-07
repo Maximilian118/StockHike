@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './_Picker.scss'
 import PickerTicker from './PickerTicker'
+import PickerCol from './PickerCol'
 import { finnHubExchanges } from '../../../../shared/utility'
 
 const Picker = () => {
@@ -26,7 +27,7 @@ const Picker = () => {
 
   return (
     <div className="picker">
-      <div className="picker-col">
+      <PickerCol>
         {Object.keys(finnHubExchanges).map((symbol, i) => 
           <PickerTicker 
           key={i} 
@@ -34,8 +35,8 @@ const Picker = () => {
           type={type}
           setType={setType}
         />)}
-      </div>
-      <div className="picker-col">
+      </PickerCol>
+      <PickerCol>
         {exchangeArr.map((symbol, i) => 
           <PickerTicker
           key={i}
@@ -44,13 +45,14 @@ const Picker = () => {
           setExchange={setExchange}
           setSymbols={setSymbols}
         />)}
-      </div>
-      <div className="picker-col">
-        {symbols.map((symbol, i) => <PickerTicker
+      </PickerCol>
+      <PickerCol>
+        {symbols.map((symbol, i) => 
+          <PickerTicker
           key={i}
           symbol={symbol}
         />)}
-      </div>
+      </PickerCol>
     </div>
   )
 }
