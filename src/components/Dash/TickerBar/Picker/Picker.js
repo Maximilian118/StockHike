@@ -6,6 +6,7 @@ import { finnHubExchanges } from '../../../../shared/utility'
 const Picker = () => {
   const [ type, setType ] = useState("")
   const [ exchange, setExchange ] = useState("")
+  const [ symbols, setSymbols ] = useState([])
   
   console.log(type, exchange)
 
@@ -19,6 +20,7 @@ const Picker = () => {
   useEffect(() => {
     if (type !== "" && !finnHubExchanges[type].includes(exchange)) {
       setExchange("")
+      setSymbols([])
     }
   }, [type]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -40,10 +42,14 @@ const Picker = () => {
           symbol={symbol}
           exchange={exchange}
           setExchange={setExchange}
+          setSymbols={setSymbols}
         />)}
       </div>
       <div className="picker-col">
-
+        {symbols.map((symbol, i) => <PickerTicker
+          key={i}
+          symbol={symbol}
+        />)}
       </div>
     </div>
   )

@@ -1,14 +1,20 @@
 import React from 'react'
 import './_PickerTicker.scss'
 import { ChevronRight } from 'react-feather'
+import { getExchangeInfo } from '../../../../../shared/APIRequests'
 
-const PickerTicker = ({ symbol, type, setType, exchange, setExchange }) => {
+const PickerTicker = ({ symbol, type, setType, exchange, setExchange, setSymbols }) => {
   let isClicked = false
-  
+
   if (type === symbol) {
     isClicked = true
   } else if (exchange === symbol) {
     isClicked = true
+  }
+
+  const exchangeSelected = () => {
+    setExchange(symbol)
+    getExchangeInfo(symbol, setSymbols)
   }
   
   return (
@@ -16,7 +22,7 @@ const PickerTicker = ({ symbol, type, setType, exchange, setExchange }) => {
       className={`picker-ticker ${isClicked && `exchange-selected`}`} 
       onClick={() => {
         setType && setType(symbol)
-        setExchange && setExchange(symbol)
+        setExchange && exchangeSelected()
       }}
     >
       <p className="symbol">{symbol}</p>
