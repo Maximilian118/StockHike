@@ -1,9 +1,9 @@
 import React from 'react'
 import './_PickerTicker.scss'
-import { ChevronRight } from 'react-feather'
+import { ChevronRight, Plus } from 'react-feather'
 import { getExchangeInfo } from '../../../../../shared/APIRequests'
 
-const PickerTicker = ({ symbol, type, setType, exchange, setExchange, setSymbols, style }) => {
+const PickerTicker = ({ symbol, type, setType, exchange, setExchange, setSymbols, col3, style }) => {
   let isClicked = false
 
   if (type === symbol) {
@@ -27,9 +27,15 @@ const PickerTicker = ({ symbol, type, setType, exchange, setExchange, setSymbols
       }}
     >
       <p className="symbol">{symbol}</p>
-      <ChevronRight/>
-      <ChevronRight className={`chevron-2 ${isClicked && `move-chevron-2`}`}/>
-      <ChevronRight className={`chevron-3 ${isClicked && `move-chevron-3`}`}/>
+      {col3 ? 
+          <Plus/>
+        : 
+        <>
+          <ChevronRight/>
+          <ChevronRight className={`chevron-2 ${isClicked && `move-chevron-2`}`}/>
+          <ChevronRight className={`chevron-3 ${isClicked && `move-chevron-3`}`}/>
+        </>
+      }
     </div>
   )
 } 

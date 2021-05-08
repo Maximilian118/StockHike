@@ -39,33 +39,30 @@ const Picker = () => {
         height={75}
         rowHeight={25}
         rowCount={exchangeArr.length}
-        rowRenderer={({key, index, style, parent}) => {
-          return (
-            <PickerTicker
-              key={key}
-              style={style}
-              symbol={exchangeArr[index]}
-              exchange={exchange}
-              setExchange={setExchange}
-              setSymbols={setSymbols}
-            />
-          )
-        }}
+        rowRenderer={({key, index, style, parent}) => 
+          <PickerTicker
+            key={key}
+            style={style}
+            symbol={exchangeArr[index]}
+            exchange={exchange}
+            setExchange={setExchange}
+            setSymbols={setSymbols}
+          />
+        }
       />
       <List
         width={140}
         height={75}
         rowHeight={25}
         rowCount={symbols.length}
-        rowRenderer={({key, index, style, parent}) => {
-          return (
-            <PickerTicker
-              key={key}
-              style={style}
-              symbol={symbols[index]}
-            />
-          )
-        }}
+        rowRenderer={({key, index, style, parent}) => 
+          <PickerTicker
+            key={key}
+            style={style}
+            symbol={symbols[index]}
+            col3={true}
+          />
+        }
       />
     </div>
   )
