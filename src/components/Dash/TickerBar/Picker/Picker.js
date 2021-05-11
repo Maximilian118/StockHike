@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { Context } from '../../../../App'
 import './_Picker.scss'
 import PickerTicker from './PickerTicker'
 import { finnHubExchanges } from '../../../../shared/utility'
 import { List } from 'react-virtualized'
 
 const Picker = () => {
+  const { user, setUser } = useContext(Context)
   const [ type, setType ] = useState("")
   const [ exchange, setExchange ] = useState("")
   const [ symbols, setSymbols ] = useState([])
@@ -60,7 +62,8 @@ const Picker = () => {
             key={key}
             style={style}
             symbol={symbols[index]}
-            col3={true}
+            user={user}
+            setUser={setUser}
           />
         }
       />

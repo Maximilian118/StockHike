@@ -41,6 +41,34 @@ export const getDefaultCandles = (resolution, from, to, user, setUser) => {
   })
 }
 
+export const getCandles = (symbol, resolution, from, to, user, setUser) => {
+  axios.get(`https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {  
+    const candles = {
+      symbol: symbol,
+      candles: candleData(symbol, res.data.c),
+    }
+
+    const symbolsArr = user.symbols
+    symbolsArr.push(candles)
+
+    const symbolsArrWithColours = symbolsArr.map((symbol, i) => {
+      return {
+        ...symbol,
+        colour: setColours()[i],
+      }
+    })
+
+    setUser({
+      ...user,
+      symbols: symbolsArrWithColours.map(symbol => symbol).sort((a, b) => (a.candles.max > b.candles.max) ? 1 : -1),
+    })
+
+    process.env.NODE_ENV === 'development' && console.log(res)
+  }).catch(err => {
+    process.env.NODE_ENV === 'development' && console.log(err)
+  })
+}
+
 export const getExchangeInfo = (symbol, setSymbols) => {
   axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=${symbol}&token=${process.env.REACT_APP_FINNHUB_APIKEY}`).then(res => {
     let symbolArr = []
